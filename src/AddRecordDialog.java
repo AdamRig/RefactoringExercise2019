@@ -27,6 +27,7 @@ public class AddRecordDialog extends JDialog implements ActionListener {
 	JComboBox<String> genderCombo, departmentCombo, fullTimeCombo;
 	JButton save, cancel;
 	EmployeeDetails parent;
+	
 	// constructor for add record dialog
 	public AddRecordDialog(EmployeeDetails parent) {
 		setTitle("Add Record");
@@ -124,46 +125,39 @@ public class AddRecordDialog extends JDialog implements ActionListener {
 	// check for input in text fields
 	public boolean checkInput() {
 		boolean valid = true;
-		// if any of inputs are in wrong format, colour text field and display message
-		if (ppsField.getText().equals("")) {
-			ppsField.setBackground(new Color(255, 150, 150));
-			valid = false;
+		boolean validation = true;
+		
+		
+		if (Validation.validate(ppsField, surnameField, firstNameField, genderCombo, departmentCombo)) {
+			validation = false;
 		}
-		if (this.parent.correctPps(this.ppsField.getText().trim(), -1)) {
-			ppsField.setBackground(new Color(255, 150, 150));
-			valid = false;
-		}
-		if (surnameField.getText().isEmpty()) {
-			surnameField.setBackground(new Color(255, 150, 150));
-			valid = false;
-		}
-		if (firstNameField.getText().isEmpty()) {
-			firstNameField.setBackground(new Color(255, 150, 150));
-			valid = false;
-		}
-		if (genderCombo.getSelectedIndex() == 0) {
-			genderCombo.setBackground(new Color(255, 150, 150));
-			valid = false;
-		}
-		if (departmentCombo.getSelectedIndex() == 0) {
-			departmentCombo.setBackground(new Color(255, 150, 150));
-			valid = false;
-		}
-		try {// try to get values from text field
-			Double.parseDouble(salaryField.getText());
-			// check if salary is greater than 0
-			if (Double.parseDouble(salaryField.getText()) < 0) {
-				salaryField.setBackground(new Color(255, 150, 150));
+		
+		if (validation == false) {
+			
+			
+		
+			try {
+				Double.parseDouble(salaryField.getText());
+				if (Double.parseDouble(salaryField.getText()) < 0) {
+					salaryField.setBackground(Color.red);
+					valid = false;
+				} 
+			} 
+			catch (NumberFormatException num) {
+				if (salaryField.isEditable()) {
+					salaryField.setBackground(Color.red);
+					valid = false;
+				} 
+			} 
+			if (fullTimeCombo.getSelectedIndex() == 0 && fullTimeCombo.isEnabled()) {
+				fullTimeCombo.setBackground(Color.red);
 				valid = false;
-			}
-		}
-		catch (NumberFormatException num) {
-			salaryField.setBackground(new Color(255, 150, 150));
-			valid = false;
-		}
-		if (fullTimeCombo.getSelectedIndex() == 0) {
-			fullTimeCombo.setBackground(new Color(255, 150, 150));
-			valid = false;
+			} 
+			if (!valid)
+				JOptionPane.showMessageDialog(null, "Wrong values or format! Please check!");
+			
+			//if(ppsField.isEditable())
+				//EmployeeDetails.setToWhite();
 		}
 		return valid;
 	}

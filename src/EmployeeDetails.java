@@ -1062,7 +1062,7 @@ public class EmployeeDetails extends JFrame implements ActionListener, ItemListe
 	}// end createContentPane
 
 	// create and show main dialog
-	private static void createAndShowGUI() {
+	 static void createAndShowGUI() {
 
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.createContentPane();// add content pane to frame
@@ -1071,14 +1071,7 @@ public class EmployeeDetails extends JFrame implements ActionListener, ItemListe
 		frame.setVisible(true);
 	}
 
-	// main method
-	public static void main(String args[]) {
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				createAndShowGUI();
-			}
-		});
-	}// end main
+	
 
 	// DocumentListener methods
 	public void changedUpdate(DocumentEvent d) {
